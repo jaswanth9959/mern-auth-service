@@ -1,1 +1,3 @@
-console.log("hello");
+const user = "jay";
+
+console.log(user);
