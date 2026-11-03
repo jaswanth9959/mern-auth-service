@@ -15,6 +15,7 @@
     "type": "module",
     "main": "index.js",
     "scripts": {
+        "dev": "nodemon src/server.ts",
         "test": "echo \"Error: no test specified\" && exit 1",
         "format:fix": "prettier . --write",
         "format:check": "prettier . --check",
@@ -24,11 +25,14 @@
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
+        "@types/express": "^5.0.6",
         "@types/node": "^26.6.6",
         "eslint": "^10.14.0",
         "husky": "^9.1.7",
         "lint-staged": "^17.6.0",
+        "nodemon": "^3.1.14",
         "prettier": "3.9.10",
+        "ts-node": "^10.9.2",
         "typescript": "^5.9.3",
         "typescript-eslint": "^8.72.1"
     },
@@ -39,6 +43,7 @@
         ]
     },
     "dependencies": {
-        "dotenv": "^18.0.9"
+        "dotenv": "^18.0.9",
+        "express": "^5.3.0"
     }
 }

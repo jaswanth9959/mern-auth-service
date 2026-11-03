@@ -1,3 +1,17 @@
-import { Config } from "./config/index.js";
+import app from "./app.ts";
+import { Config } from "./config/index.ts";
 
-console.log(Config.PORT);
+const startServer = () => {
+    const port = Config.PORT;
+
+    try {
+        app.listen(port, () => {
+            console.log(`Listing on port ${port}`);
+        });
+    } catch (err) {
+        console.error(err);
+        process.exit(1);
+    }
+};
+
+startServer();
