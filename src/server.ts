@@ -1,3 +1,3 @@
-const user = "jay";
+import { Config } from "./config/index.js";
 
-console.log(user);
+console.log(Config.PORT);
