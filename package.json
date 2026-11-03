@@ -1,31 +1,33 @@
 {
-    "name": "auth",
-    "version": "1.0.0",
-    "description": "",
-    "homepage": "https://github.com/jaswanth9959/mern-auth-service#readme",
-    "bugs": {
-        "url": "https://github.com/jaswanth9959/mern-auth-service/issues"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/jaswanth9959/mern-auth-service.git"
-    },
-    "license": "ISC",
-    "author": "",
-    "type": "commonjs",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "format:fix": "prettier . --write",
-        "format:check": "prettier . --check",
-        "lint:check": "eslint .",
-        "lint:fix": "eslint . --fix"
-    },
-    "devDependencies": {
-        "@eslint/js": "^10.0.1",
-        "eslint": "^10.14.0",
-        "prettier": "3.9.10",
-        "typescript": "^5.9.3",
-        "typescript-eslint": "^8.72.1"
-    }
+  "name": "auth",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/jaswanth9959/mern-auth-service#readme",
+  "bugs": {
+    "url": "https://github.com/jaswanth9959/mern-auth-service/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaswanth9959/mern-auth-service.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format:fix": "prettier . --write",
+    "format:check": "prettier . --check",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.14.0",
+    "husky": "^9.1.7",
+    "prettier": "3.9.10",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.1"
+  }
 }
