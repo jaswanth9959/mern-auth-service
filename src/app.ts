@@ -9,6 +9,7 @@ import logger from "./config/logger.ts";
 import authRoutes from "./routes/authRoutes.ts";
 
 const app = express();
+app.use(express.json());
 
 app.get("/", (req, res) => {
     res.send("Welcome");
