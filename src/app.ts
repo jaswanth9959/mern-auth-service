@@ -5,12 +5,15 @@ import express, {
 } from "express";
 import type { HttpError } from "http-errors";
 import logger from "./config/logger.ts";
+import authRoutes from "./routes/authRoutes.ts";
 
 const app = express();
 
 app.get("/", (req, res) => {
     res.send("Welcome");
 });
+
+app.use("/auth", authRoutes);
 
 // global error handler
 
