@@ -73,6 +73,27 @@ describe("POST /auth/register", () => {
             expect(users[0]?.lastName).toBe(userData.lastName);
             expect(users[0]?.email).toBe(userData.email);
         });
+
+        it("should return user id", async () => {
+            const userData = {
+                firstName: "jay",
+                lastName: "Reddy",
+                email: "jay@gmail.com",
+                password: "secret",
+            };
+
+            const response = await request(app)
+                .post("/auth/register")
+                .send(userData);
+            const responseBody = response.body as { id: number };
+
+            const userRepository = connection.getRepository(User);
+
+            const users = await userRepository.find();
+
+            expect(users).toHaveLength(1);
+            expect(responseBody.id).toBe(users[0]?.id);
+        });
     });
 
     describe("all fields are not given", () => {});
