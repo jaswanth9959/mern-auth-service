@@ -1,15 +1,26 @@
-import express from "express";
+import express, {
+    type NextFunction,
+    type Request,
+    type Response,
+} from "express";
 import { AuthController } from "../controllers/AuthControllers.ts";
 import { UserService } from "../services/UserService.ts";
 import { AppDataSource } from "../config/data-source.ts";
 import { User } from "../entities/User.ts";
+import logger from "../config/logger.ts";
+import registerValidator from "../validators/register-validator.ts";
 
 const router = express.Router();
 // instance of the class
 const userRepository = AppDataSource.getRepository(User);
 const userService = new UserService(userRepository);
-const authController = new AuthController(userService);
+const authController = new AuthController(userService, logger);
 
-router.post("/register", (req, res) => authController.register(req, res));
+router.post(
+    "/register",
+    registerValidator,
+    (req: Request, res: Response, next: NextFunction) =>
+        authController.register(req, res, next),
+);
 
 export default router;
