@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { User } from "../entities/User.ts";
 import { Config } from "./index.ts";
+import { RefreshToken } from "../entities/RefreshToken.ts";
 
 function getEnv(key: string): string {
     const value = process.env[key];
@@ -22,7 +23,7 @@ export const AppDataSource = new DataSource({
     database: getEnv("DB_NAME"),
     synchronize: false,
     logging: false,
-    entities: [User],
+    entities: [User, RefreshToken],
     migrations: [],
     subscribers: [],
 });

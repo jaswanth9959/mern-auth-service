@@ -4,6 +4,8 @@ import type { DataSource } from "typeorm";
 import { AppDataSource } from "../../config/data-source.ts";
 import { User } from "../../entities/User.ts";
 import { ROLES } from "../../constants/index.ts";
+import { isJWT } from "../utils/index.ts";
+import { RefreshToken } from "./../../entities/RefreshToken.ts";
 
 describe("POST /auth/register", () => {
     let connection: DataSource;
@@ -19,9 +21,24 @@ describe("POST /auth/register", () => {
         connection = await AppDataSource.initialize();
     });
 
+    // beforeEach(async () => {
+    //     // Delete child records first
+    //     await connection.getRepository(RefreshToken).clear();
+
+    //     // Then delete parent records
+    //     await connection.getRepository(User).clear();
+    // });
+
     beforeEach(async () => {
-        // Clear existing records before every test
-        await connection.getRepository(User).clear();
+        // Delete child records first
+        await connection
+            .createQueryBuilder()
+            .delete()
+            .from(RefreshToken)
+            .execute();
+
+        // Delete parent records next
+        await connection.createQueryBuilder().delete().from(User).execute();
     });
 
     afterAll(async () => {
@@ -69,6 +86,44 @@ describe("POST /auth/register", () => {
             const users = await connection.getRepository(User).find();
 
             expect(users[0]?.role).toBe(ROLES.CUSTOMER);
+        });
+        it("should return access and refresh tokens inside cookies", async () => {
+            const response = await request(app)
+                .post("/auth/register")
+                .send(createUserData());
+
+            const cookies = response.headers["set-cookie"] as
+                string[] | undefined;
+
+            const accessCookie = cookies?.find((cookie: string) =>
+                cookie.startsWith("accessToken="),
+            );
+
+            const refreshCookie = cookies?.find((cookie: string) =>
+                cookie.startsWith("refreshToken="),
+            );
+
+            expect(accessCookie).toBeDefined();
+            expect(refreshCookie).toBeDefined();
+            expect(isJWT(accessCookie)).toBeTruthy();
+            expect(isJWT(refreshCookie)).toBeTruthy();
+        });
+        it("should retrun the refresh token from the database", async () => {
+            const userData = createUserData();
+
+            const response = await request(app)
+                .post("/auth/register")
+                .send(userData);
+
+            const refreshTokenRepo = connection.getRepository(RefreshToken);
+            const token = await refreshTokenRepo
+                .createQueryBuilder("refreshToken")
+                .where("refreshToken.userId = :userId", {
+                    userId: (response.body as Record<string, string>).id,
+                })
+                .getMany();
+
+            expect(token).toHaveLength(1);
         });
     });
 
