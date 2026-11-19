@@ -12,10 +12,10 @@
     },
     "license": "ISC",
     "author": "",
-    "type": "module",
+    "type": "commonjs",
     "main": "index.js",
     "scripts": {
-        "dev": "cross-env NODE_ENV=dev nodemon src/server.ts",
+        "dev": "cross-env NODE_ENV=dev nodemon --exec ts-node src/server.ts",
         "test": "cross-env NODE_ENV=test jest",
         "format:fix": "prettier . --write",
         "format:check": "prettier . --check",

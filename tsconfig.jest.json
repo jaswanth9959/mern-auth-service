@@ -1,11 +1,18 @@
+// {
+//     "extends": "./tsconfig.json",
+//     "compilerOptions": {
+//         "module": "CommonJS",
+//         "moduleResolution": "Node",
+//         "esModuleInterop": true,
+//         "allowSyntheticDefaultImports": true,
+//         "verbatimModuleSyntax": false,
+//         "noEmit": true
+//     }
+// }
+
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
-        "module": "CommonJS",
-        "moduleResolution": "Node",
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "verbatimModuleSyntax": false,
         "noEmit": true
     }
 }

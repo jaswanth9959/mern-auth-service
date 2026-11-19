@@ -21,7 +21,7 @@ export const AppDataSource = new DataSource({
     username: getEnv("DB_USERNAME"),
     password: getEnv("DB_PASSWORD"),
     database: getEnv("DB_NAME"),
-    synchronize: false,
+    synchronize: true,
     logging: false,
     entities: [User, RefreshToken],
     migrations: [],
