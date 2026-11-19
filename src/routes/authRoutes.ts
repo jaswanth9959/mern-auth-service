@@ -17,6 +17,8 @@ import { AppDataSource } from "../config/data-source.ts";
 import logger from "../config/logger.ts";
 //express-validator
 import registerValidator from "../validators/register-validator.ts";
+import loginValidator from "../validators/login-validator.ts";
+import { CredentialService } from "../services/CredentialService.ts";
 
 const router = express.Router();
 //tables in db
@@ -25,13 +27,26 @@ const refreshTokenRepository = AppDataSource.getRepository(RefreshToken);
 // instance of the class
 const userService = new UserService(userRepository);
 const tokenService = new TokenService(refreshTokenRepository);
-const authController = new AuthController(userService, logger, tokenService);
+const credentialService = new CredentialService();
+const authController = new AuthController(
+    userService,
+    logger,
+    tokenService,
+    credentialService,
+);
 
 router.post(
     "/register",
     registerValidator,
     (req: Request, res: Response, next: NextFunction) =>
         authController.register(req, res, next),
+);
+
+router.post(
+    "/login",
+    loginValidator,
+    (req: Request, res: Response, next: NextFunction) =>
+        authController.login(req, res, next),
 );
 
 export default router;

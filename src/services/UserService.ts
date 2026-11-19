@@ -33,4 +33,9 @@ export class UserService {
             throw createHttpError(500, "Unable to save user data");
         }
     }
+
+    async findUserByEmail(email: string) {
+        const user = await this.userRepository.findOne({ where: { email } });
+        return user;
+    }
 }
