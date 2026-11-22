@@ -19,6 +19,8 @@ import logger from "../config/logger.ts";
 import registerValidator from "../validators/register-validator.ts";
 import loginValidator from "../validators/login-validator.ts";
 import { CredentialService } from "../services/CredentialService.ts";
+import authenticate from "../middlewares/authenticate.ts";
+import { AuthRequest } from "../types/index.ts";
 
 const router = express.Router();
 //tables in db
@@ -47,6 +49,10 @@ router.post(
     loginValidator,
     (req: Request, res: Response, next: NextFunction) =>
         authController.login(req, res, next),
+);
+
+router.get("/self", authenticate, (req: Request, res: Response) =>
+    authController.self(req as AuthRequest, res),
 );
 
 export default router;

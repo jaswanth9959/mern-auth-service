@@ -7,8 +7,10 @@ import express, {
 import type { HttpError } from "http-errors";
 import logger from "./config/logger.ts";
 import authRoutes from "./routes/authRoutes.ts";
+import cookieParser from "cookie-parser";
 
 const app = express();
+app.use(cookieParser());
 app.use(express.json());
 
 app.get("/", (req, res) => {
